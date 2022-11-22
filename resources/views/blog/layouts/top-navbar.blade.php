@@ -4,7 +4,7 @@
         <nav>
             <ul class="flex items-center justify-between font-bold text-sm text-white uppercase no-underline">
                 @if (Auth::check())
-                    <li><a class="hover:text-gray-200 hover:underline px-4" href="{{ route('dashboard') }}">Dashboard</a>
+                    <li><a class="hover:text-gray-200 hover:underline px-4" href="{{ route('admin.dashboard') }}">Dashboard</a>
                     </li>
                 @endif
             </ul>

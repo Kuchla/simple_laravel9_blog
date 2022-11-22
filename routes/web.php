@@ -21,8 +21,19 @@ Route::get('/post', function () {
     return view('blog.post');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+Route::name('admin.')
+    ->prefix('admin')
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
+
+        Route::get('category-datatables', function () {
+            return view('category.index');
+        })->name('categories');
+    });
+
+require __DIR__ . '/auth.php';
