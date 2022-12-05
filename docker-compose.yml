@@ -4,7 +4,7 @@ networks:
   laravel:
 
 volumes:
-  mysql-data:  
+  mysql-data:
 
 services:
   app:
@@ -23,6 +23,7 @@ services:
       - php
       - mysql
       - phpmyadmin
+      - npm
     networks:
       - laravel
 
@@ -77,7 +78,7 @@ services:
       - laravel
 
   npm:
-    image: node:19.0
+    image: node:19.1
     container_name: npm
     volumes:
       - ./:/var/www/html
