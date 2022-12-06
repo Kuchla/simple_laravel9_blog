@@ -34,6 +34,10 @@ Route::name('admin.')
         Route::get('category-datatables', function () {
             return view('category.index');
         })->name('categories');
+
+        Route::get('post-datatables', function () {
+            return view('post.index');
+        })->name('posts');
     });
 
 require __DIR__ . '/auth.php';
