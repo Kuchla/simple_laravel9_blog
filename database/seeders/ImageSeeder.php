@@ -16,16 +16,22 @@ class ImageSeeder extends Seeder
      */
     public function run()
     {
-        Image::factory()->count(3)->sequence(fn ($sequence) => [
-            'imageable_id' => $sequence->index + 1
-        ])->create([
-            'imageable_type' => Post::class,
-        ]);
+        Image::factory()
+            ->count(3)
+            ->sequence(
+                fn ($sequence) => ['imageable_id' => $sequence->index + 1]
+            )->create([
+                'imageable_type' => Post::class,
+            ]);
 
-        Image::factory()->count(3)->sequence(fn ($sequence) => [
-            'imageable_id' => $sequence->index + 1
-        ])->create([
-            'imageable_type' => User::class,
-        ]);
+        Image::factory()
+            ->count(3)
+            ->sequence(
+                fn ($sequence) => [
+                    'imageable_id' => $sequence->index + 1
+                ]
+            )->create([
+                'imageable_type' => User::class,
+            ]);
     }
 }
