@@ -3,7 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Image;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class ImageSeeder extends Seeder
@@ -15,6 +16,16 @@ class ImageSeeder extends Seeder
      */
     public function run()
     {
-        Image::factory()->count(3)->create();
+        Image::factory()->count(3)->sequence(fn ($sequence) => [
+            'imageable_id' => $sequence->index + 1
+        ])->create([
+            'imageable_type' => Post::class,
+        ]);
+
+        Image::factory()->count(3)->sequence(fn ($sequence) => [
+            'imageable_id' => $sequence->index + 1
+        ])->create([
+            'imageable_type' => User::class,
+        ]);
     }
 }

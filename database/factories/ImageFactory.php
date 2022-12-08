@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ImageFactory extends Factory
 {
-    protected $imageableId = 0;
     /**
      * Define the model's default state.
      *
@@ -17,13 +16,9 @@ class ImageFactory extends Factory
      */
     public function definition()
     {
-        $this->imageableId++;
-
         return [
             'name' => 'image-default.jpg',
             'path' => 'images/image-default.jpg',
-            'imageable_type' => 'App\Models\Post',
-            'imageable_id' => $this->imageableId
         ];
     }
 }

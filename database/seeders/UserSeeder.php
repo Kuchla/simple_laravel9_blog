@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -16,6 +15,13 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()->count(3)->create();
+        User::factory()
+            ->count(3)
+            ->sequence(
+                fn ($sequence) => [
+                    'email' => !$sequence->index ?
+                        'admin@admin.com' : 'user' . $sequence->index . '@user.com'
+                ]
+            )->create();
     }
 }
