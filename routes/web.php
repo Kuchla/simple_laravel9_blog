@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\HomeComponent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,14 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('blog.home');
-});
-
-Route::get('/post', function () {
-    return view('blog.post');
-});
-
+Route::get('/', HomeComponent::class)->name('home');
+Route::get('/category/{category}', HomeComponent::class)->name('home-by-category');
 
 Route::name('admin.')
     ->prefix('admin')

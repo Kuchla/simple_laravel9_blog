@@ -17,7 +17,7 @@ class ImageSeeder extends Seeder
     public function run()
     {
         Image::factory()
-            ->count(3)
+            ->count(15)
             ->sequence(
                 fn ($sequence) => ['imageable_id' => $sequence->index + 1]
             )->create([
