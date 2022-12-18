@@ -25,4 +25,20 @@ class Post extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+
+    public function next()
+    {
+        return $this->where('id', '>', $this->id)
+            ->where('category_id', $this->category_id)
+            ->orderBy('id', 'asc')
+            ->first();
+    }
+
+    public function previous()
+    {
+        return Post::where('id', '<', $this->id)
+            ->where('category_id', $this->category_id)
+            ->orderBy('id', 'desc')
+            ->first();
+    }
 }

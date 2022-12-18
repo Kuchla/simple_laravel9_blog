@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Livewire\HomeComponent;
+use App\Http\Livewire\ShowPostComponent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeComponent::class)->name('home');
 Route::get('/category/{category}', HomeComponent::class)->name('home-by-category');
+Route::get('/post/{post}', ShowPostComponent::class)->name('show-post');
+
 
 Route::name('admin.')
     ->prefix('admin')
