@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Helpers\PostHelper;
 use App\Models\Category;
 use App\Models\Post;
 use Livewire\Component;
@@ -20,7 +21,8 @@ class HomeComponent extends Component
             'posts' => $this->getPosts($this->categoryIdSelected)
         ])->layoutData([
             'categories' => $this->categories,
-            'categoryIdSelected' => $this->categoryIdSelected
+            'categoryIdSelected' => $this->categoryIdSelected,
+            'randomImages' => PostHelper::getRandomImages()
         ]);
     }
 

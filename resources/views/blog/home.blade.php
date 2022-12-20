@@ -6,10 +6,10 @@
     <!-- Posts Section -->
     <section class="w-full md:w-2/3 flex flex-col items-center px-3">
         @foreach ($posts as $post)
-            <article class="flex flex-col shadow my-4">
+            <article class="flex flex-col shadow my-4 min-w-full">
                 <!-- Article Image -->
-                <a href="#" class="hover:opacity-75">
-                    <img src="{{ asset($post->image->path) }}">
+                <a href="{{ route('show-post', $post->id) }}" class="hover:opacity-75">
+                    <img class="h-96 w-96" src="{{ asset($post->image->path) }}">
                 </a>
                 <div class="bg-white flex flex-col justify-start p-6">
                     <a href="#"

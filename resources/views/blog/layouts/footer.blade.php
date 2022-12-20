@@ -5,8 +5,11 @@
             x-on:click="decrement()">
             &#8592;
         </button>
-        <template x-for="image in images.slice(currentIndex, currentIndex + 6)" :key="images.indexOf(image)">
-            <img class="w-1/6 hover:opacity-75" :src="image">
+        <template x-for="[id, value] in Object.entries(images).slice(currentIndex, currentIndex + 6)"
+            :key="id">
+            <a class="w-1/6 hover:opacity-75" x-bind:href="'{{ url('post/') }}/' + id">
+                <img class="h-56 w-80" x-bind:src="'{{ config('app.url') }}' + value">
+            </a>
         </template>
         <button
             class="absolute right-0 bg-blue-800 hover:bg-blue-700 text-white text-2xl font-bold hover:shadow rounded-full w-16 h-16 mr-12"
@@ -21,7 +24,6 @@
             <a href="#" class="uppercase px-3">Terms & Conditions</a>
             <a href="#" class="uppercase px-3">Contact Us</a>
         </div>
-        <div class="uppercase pb-6">&copy; myblog.com</div>
     </div>
 </footer>
 
@@ -29,22 +31,15 @@
     function getCarouselData() {
         return {
             currentIndex: 0,
-            images: [
-                'https://source.unsplash.com/collection/1346951/800x800?sig=1',
-                'https://source.unsplash.com/collection/1346951/800x800?sig=2',
-                'https://source.unsplash.com/collection/1346951/800x800?sig=3',
-                'https://source.unsplash.com/collection/1346951/800x800?sig=4',
-                'https://source.unsplash.com/collection/1346951/800x800?sig=5',
-                'https://source.unsplash.com/collection/1346951/800x800?sig=6',
-                'https://source.unsplash.com/collection/1346951/800x800?sig=7',
-                'https://source.unsplash.com/collection/1346951/800x800?sig=8',
-                'https://source.unsplash.com/collection/1346951/800x800?sig=9',
-            ],
+            images: @js($randomImages),
+
             increment() {
-                this.currentIndex = this.currentIndex === this.images.length - 6 ? 0 : this.currentIndex + 1;
+                this.currentIndex = this.currentIndex === Object.keys(this.images).length - 6 ? 0 : this.currentIndex +
+                    1;
             },
             decrement() {
-                this.currentIndex = this.currentIndex === this.images.length - 6 ? 0 : this.currentIndex - 1;
+                this.currentIndex = this.currentIndex === Object.keys(this.images).length - 6 ? 0 : this.currentIndex -
+                    1;
             },
         }
     }
