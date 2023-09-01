@@ -13,6 +13,9 @@ module.exports = {
             fontFamily: {
                 karla: ['Karla'],
             },
+            maxHeight: {
+                '110': '26rem',
+            }
         },
     },
 
