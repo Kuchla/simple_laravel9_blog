@@ -1,27 +1,29 @@
-<nav class="w-full py-4 bg-blue-800 shadow">
+<nav class="w-full py-8 bg-stone-900 shadow">
     <div class="w-full container mx-auto flex flex-wrap items-center justify-between">
-
-        <nav>
-            <ul class="flex items-center justify-between font-bold text-sm text-white uppercase no-underline">
+        <div class="flex items-center font-bold text-sm text-white uppercase">
+            <a class="hover:text-gray-200 hover:underline px-4" href="{{ route('admin.dashboard') }}">
                 @if (Auth::check())
-                    <li><a class="hover:text-gray-200 hover:underline px-4" href="{{ route('admin.dashboard') }}">Dashboard</a>
-                    </li>
+                    Dashboard
                 @endif
-            </ul>
-        </nav>
-
-        <div class="flex items-center text-lg no-underline text-white pr-6">
-            <a class="" href="#">
-                <i class="fab fa-facebook"></i>
             </a>
+        </div>
+
+        <div class="bg-stone-900 flex items-center text-lg no-underline text-white">
+            <div class="flex flex-col items-center py-1">
+                <a class="font-serif font-bold text-white uppercase hover:text-gray-300 text-3xl"
+                    href="{{ route('home') }}">
+                    <i class="fa fa-record-vinyl fa-xl pr-2"></i>
+                    {{ __('Kuchla') }}
+                </a>
+            </div>
+        </div>
+
+        <div class="flex items-center text-lg no-underline text-white p-2">
             <a class="pl-6" href="#">
                 <i class="fab fa-instagram"></i>
             </a>
             <a class="pl-6" href="#">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a class="pl-6" href="#">
-                <i class="fab fa-linkedin"></i>
+                <i class="fa-solid fa-magnifying-glass"></i>
             </a>
         </div>
     </div>

@@ -13,21 +13,10 @@
 </head>
 
 <body class="bg-white font-karla">
-    @include('blog.layouts.top-navbar')
-
-    @if (isset($header))
-        <header class="w-full container mx-auto">
-            <div class="flex flex-col items-center py-12">
-                <a class="font-bold text-gray-800 uppercase hover:text-gray-700 text-5xl" href="#">
-                    {{ __('Minimal Blog') }}
-                </a>
-                <p class="text-lg text-gray-600">
-                    {{ $header }}
-                </p>
-            </div>
-        </header>
-    @endif
-    @include('blog.layouts.category-navbar')
+    <header>
+        @include('blog.layouts.top-navbar')
+        @include('blog.layouts.category-navbar')
+    </header>
 
     <main>
         {{ $slot }}
