@@ -75,19 +75,25 @@ class PostDatatables extends LivewireDatatable
     public function create()
     {
         $this->formAction = 'create';
+
+        $this->dispatchBrowserEvent('create_ckeditor', ['value' => '.' . $this->formAction]);
         $this->disabledInputs = false;
     }
 
     public function show($id)
     {
-        $this->post = Post::findOrFail($id);
         $this->formAction = 'show';
+
+        $this->dispatchBrowserEvent('create_ckeditor', ['value' => '.' . $this->formAction . '-' . $id]);
+        $this->post = Post::findOrFail($id);
         $this->disabledInputs = true;
     }
 
     public function edit($id)
     {
         $this->formAction = 'edit';
+
+        $this->dispatchBrowserEvent('create_ckeditor', ['value' => '.' . $this->formAction . '-' . $id]);
         $this->disabledInputs = false;
         $this->post = Post::findOrFail($id);
     }

@@ -24,7 +24,7 @@
                         {{ $post->created_at }}
                     </p>
                     <img src="{{ asset($post->image->path) }}" class="w-4/6 aspect-square rounded">
-                    <p class="py-3">{{ $post->text }}</p>
+                    <p class="py-3">{!! $post->text !!}</p>
                 </div>
             </article>
 

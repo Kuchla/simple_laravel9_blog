@@ -10,8 +10,10 @@
     <x-input-error :messages="$errors->get('post.description')" class="mt-2" />
 
     <x-input-label for="text" :value="__('Text')" class="mt-2" />
-    <textarea id="text" rows="3" wire:model.lazy="post.text" @disabled($this->disabledInputs)
-        class="mt-1 w-full resize-none rounded rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
+    <div wire:ignore id="ckdiv-{{ @$ckeditor_class }}">
+        <textarea id="text" rows="3" wire:model.lazy="post.text" @disabled($this->disabledInputs)
+            class="{{ @$ckeditor_class }} mt-1 w-full resize-none rounded rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
+    </div>
     <x-input-error :messages="$errors->get('post.text')" class="mt-2" />
 
     <x-input-label for="category_id" :value="__('Category')" class="mt-2" />
@@ -71,3 +73,24 @@
         </label>
     </div>
 </div>
+@push('scripts')
+    @once
+        <script>
+            window.addEventListener('create_ckeditor', event => {
+                value = event.detail.value;
+
+                ClassicEditor
+                    .create(document.querySelector(value))
+                    .then(editor => {
+                        editor.model.document.on('change:data', () => {
+                            @this.set('post.text', editor.getData());
+                        })
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+                document.querySelector('.ck-reset').remove();
+            });
+        </script>
+    @endonce
+@endpush

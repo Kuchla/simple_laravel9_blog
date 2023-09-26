@@ -17,7 +17,7 @@
     <div class="mt-2">
         <div class="mb-4">
             <form x-on:saved.window="open = false">
-                @include('post.form-inputs')
+                @include('post.form-inputs', ['ckeditor_class' => 'create'])
 
                 <div class="flex items-center justify-center mt-4">
                     <x-primary-button class="ml-3" wire:click.prevent="save()">
