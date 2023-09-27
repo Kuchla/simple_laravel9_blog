@@ -76,7 +76,7 @@ class PostDatatables extends LivewireDatatable
     {
         $this->formAction = 'create';
 
-        $this->dispatchBrowserEvent('create_ckeditor', ['value' => '.' . $this->formAction]);
+        $this->dispatchBrowserEvent('create_ckeditor', ['class_name' => '.' . $this->formAction]);
         $this->disabledInputs = false;
     }
 
@@ -84,7 +84,7 @@ class PostDatatables extends LivewireDatatable
     {
         $this->formAction = 'show';
 
-        $this->dispatchBrowserEvent('create_ckeditor', ['value' => '.' . $this->formAction . '-' . $id]);
+        $this->dispatchBrowserEvent('create_ckeditor', ['class_name' => '.' . $this->formAction . '-' . $id]);
         $this->post = Post::findOrFail($id);
         $this->disabledInputs = true;
     }
@@ -93,7 +93,7 @@ class PostDatatables extends LivewireDatatable
     {
         $this->formAction = 'edit';
 
-        $this->dispatchBrowserEvent('create_ckeditor', ['value' => '.' . $this->formAction . '-' . $id]);
+        $this->dispatchBrowserEvent('create_ckeditor', ['class_name' => '.' . $this->formAction . '-' . $id]);
         $this->disabledInputs = false;
         $this->post = Post::findOrFail($id);
     }
