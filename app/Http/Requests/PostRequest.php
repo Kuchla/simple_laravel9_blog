@@ -14,6 +14,7 @@ class PostRequest
     public function rules()
     {
         return [
+            'tags' => 'required',
             'post.title' => 'required|min:2',
             'post.description' => 'required|min:2',
             'post.text' => 'required|min:1',

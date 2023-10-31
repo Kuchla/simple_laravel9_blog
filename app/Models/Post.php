@@ -26,6 +26,11 @@ class Post extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'post_tag', 'post_id', 'tag_id')->withTimestamps();
+    }
+
     public function next()
     {
         return $this->where('id', '>', $this->id)

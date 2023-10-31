@@ -65,6 +65,11 @@
     </div>
     <x-input-error :messages="$errors->get('image')" class="mt-2" />
 
+    <div>
+        <x-input-label for="image" :value="__('Tags')" class="mt-3" />
+        <div wire:ignore id="tags{{ @$ckeditor_class }}" class="tags{{ @$ckeditor_class }}" wire:model="tag"></div>
+    </div>
+
     <div class="block mt-4">
         <label for="active" class="inline-flex items-center">
             <input id="active" type="checkbox" wire:model="post.active" @disabled($this->disabledInputs)
@@ -77,9 +82,34 @@
     @once
         <script>
             window.addEventListener('create_ckeditor', event => {
-                let className = event.detail.class_name;
+                let tags = [
+                    @foreach ($this->tags as $tag)
 
-                CKEDITOR.ClassicEditor.create(document.querySelector(className), {
+                        {
+                            label: "{{ $tag->name }}",
+                            value: "{{ $tag->id }}"
+                        },
+                    @endforeach
+                ];
+
+                VirtualSelect.init({
+                    ele: event.detail.tag_id,
+                    multiple: true,
+                    options: tags,
+                    selectedValue: event.detail.tag_id !== '#tagscreate' ? event.detail.selected_tags : [],
+                    maxWidth: '100%',
+                    placeholder: 'Select the options'
+                });
+
+                let selectedTags = document.querySelector(event.detail.tag_id);
+
+                selectedTags.addEventListener('change', () => {
+
+                    let data = selectedTags.value;
+                    @this.set('tag', data);
+                });
+
+                CKEDITOR.ClassicEditor.create(document.querySelector(event.detail.class_name), {
                         // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
                         toolbar: {
                             items: [
@@ -269,7 +299,7 @@
                         console.error(error);
                     });
 
-                    document.querySelector('.ck-reset').remove();
+                document.querySelector('.ck-reset').remove();
             });
         </script>
     @endonce

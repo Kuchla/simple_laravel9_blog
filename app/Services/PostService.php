@@ -22,6 +22,9 @@ class PostService
                 'category_id' => $attributes['category_id'],
                 'user_id' => Auth::user()->id
             ]);
+
+            $post->tags()->attach([1,2]);
+
             DB::commit();
 
             session()->flash('message', [

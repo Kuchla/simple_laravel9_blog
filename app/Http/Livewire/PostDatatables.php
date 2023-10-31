@@ -5,8 +5,12 @@ namespace App\Http\Livewire;
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Services\ImageService;
 use App\Services\PostService;
+
+use Illuminate\Http\Request as HttpRequest;
+
 use Livewire\WithFileUploads;
 use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\Column;
@@ -25,6 +29,9 @@ class PostDatatables extends LivewireDatatable
     public $category;
     public $formAction;
     public $disabledInputs;
+    public $selectedTags;
+    public $tags;
+    public $tag;
 
     protected function rules()
     {
@@ -34,6 +41,7 @@ class PostDatatables extends LivewireDatatable
     public function builder()
     {
         $this->category = Category::all();
+        $this->tags = Tag::all();
         return Post::query();
     }
 
@@ -76,7 +84,11 @@ class PostDatatables extends LivewireDatatable
     {
         $this->formAction = 'create';
 
-        $this->dispatchBrowserEvent('create_ckeditor', ['class_name' => '.' . $this->formAction]);
+        $this->dispatchBrowserEvent('create_ckeditor', [
+            'class_name' => '.' . $this->formAction,
+            'selected_tags' => $this->nome, 'tag_id' => '#tagscreate'
+        ]);
+
         $this->disabledInputs = false;
     }
 
@@ -84,26 +96,40 @@ class PostDatatables extends LivewireDatatable
     {
         $this->formAction = 'show';
 
-        $this->dispatchBrowserEvent('create_ckeditor', ['class_name' => '.' . $this->formAction . '-' . $id]);
-        $this->post = Post::findOrFail($id);
         $this->disabledInputs = true;
+        $this->post = Post::findOrFail($id);
+        $this->selectedTags = $this->post->tags->pluck('id');
+
+        $this->dispatchBrowserEvent('create_ckeditor', [
+            'class_name' => '.' . $this->formAction . '-' . $id,
+            'tag_id' => '#tagsshow-' . $id,
+            'selected_tags' => $this->selectedTags
+        ]);
     }
 
     public function edit($id)
     {
         $this->formAction = 'edit';
 
-        $this->dispatchBrowserEvent('create_ckeditor', ['class_name' => '.' . $this->formAction . '-' . $id]);
         $this->disabledInputs = false;
         $this->post = Post::findOrFail($id);
+        $this->selectedTags = $this->post->tags->pluck('id');
+
+        $this->dispatchBrowserEvent('create_ckeditor', [
+            'class_name' => '.' . $this->formAction . '-' . $id,
+            'tag_id' => '#tagsedit-' . $id,
+            'selected_tags' => $this->selectedTags
+        ]);
     }
 
-    public function update(Post $post)
+    public function update(Post $post, HttpRequest $r)
     {
         $this->validate();
 
         PostService::update($post, $this->post->getAttributes());
         ImageService::update($this->image, $post);
+        $post->tags()->sync($this->tag);
+
         $this->resetModal();
     }
 
@@ -113,6 +139,8 @@ class PostDatatables extends LivewireDatatable
 
         $post = PostService::save($this->post);
         ImageService::save($this->image, $post);
+        $post->tags()->sync($this->tag);
+
         $this->resetModal();
     }
 
