@@ -12,7 +12,8 @@
 
                     <div class="flex flex-col p-2">
                         <a href="{{ route('show-post', $post->id) }}" class="hover:opacity-75">
-                            <img class="aspect-square min-w-full rounded mb-4" src="{{ asset($post->image->path) }}">
+                            <img class="aspect-square min-w-full rounded mb-4"
+                                src="{{ $post->image ? asset($post->image->path) : asset('/images/image-default.jpg') }}">
                         </a>
 
                         <a href="{{ route('show-post', $post->id) }}"
@@ -33,24 +34,39 @@
                         <a href="{{ route('show-post', $post->id) }}"
                             class="uppercase text-gray-800 hover:text-black">Continue Reading <i
                                 class="fas fa-arrow-right"></i></a>
+
+                        <p class="text-sm pb-4 truncate">
+                            <a href="#" class="font-semibold hover:text-gray-800">
+                                @foreach ($post->tags as $tag)
+                                    #{{ $tag->name }}
+                                @endforeach
+                            </a>
+                        </p>
                     </div>
                 </article>
             @endforeach
         </div>
-
         {{ $posts->links('pagination::custom-tailwind') }}
+
     </section>
 
     <!-- Sidebar Section -->
     <aside class="w-full md:w-1/4 flex flex-col items-center">
 
         <div class="w-full bg-gray-100 shadow flex flex-col my-2 p-6 rounded">
-            <p class="text-xl font-semibold pb-5">About Me</p>
-            <p class="pb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis est eu odio
-                sagittis tristique. Vestibulum ut finibus leo. In hac habitasse platea dictumst.</p>
+            <p class="text-xl font-semibold border-l-4 px-1 border-lime-600">Tags</p>
+            <p class="pb-2 pt-5">
+                <a class="mr-1 hover:opacity-70 {{ !$tagIdSelected <= 0 ?: 'bg-gray-400 rounded p-1' }}"
+                    href="{{ route('home-by-category', ['category' => $categoryIdSelected, 'tag' => '']) }}"> #All</a>
+                @foreach ($tags as $tag)
+                    <a class="mr-1 hover:opacity-70 {{ $tag->id != $tagIdSelected ?: 'bg-gray-400 rounded p-1' }}"
+                        href="{{ route('home-by-category', ['category' => $categoryIdSelected, 'tag' => $tag->id]) }}">
+                        #{{ $tag->name }}</a>
+                @endforeach
+            </p>
             <a href="#"
                 class="w-full bg-rose-600 text-white font-bold text-sm uppercase rounded hover:bg-rose-500 flex items-center justify-center px-2 py-3 mt-4">
-                Get to know me
+                Get Random
             </a>
         </div>
 

@@ -5,11 +5,13 @@ namespace App\Http\Livewire;
 use App\Helpers\PostHelper;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Livewire\Component;
 
 class ShowPostComponent extends Component
 {
     public $post;
+    public $tags;
 
     public function render()
     {
@@ -25,5 +27,6 @@ class ShowPostComponent extends Component
     public function mount(Post $post)
     {
         $this->post = $post;
+        $this->tags = Tag::all();
     }
 }

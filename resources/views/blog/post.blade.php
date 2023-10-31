@@ -23,8 +23,15 @@
                         Published on
                         {{ $post->created_at }}
                     </p>
-                    <img src="{{ asset($post->image->path) }}" class="w-4/6 aspect-square rounded">
+                    <img src="{{ $post->image ? asset($post->image->path) : asset('/images/image-default.jpg') }}"
+                        class="w-4/6 aspect-square rounded">
                     <p class="py-3">{!! $post->text !!}</p>
+                    <hr class="mt-4">
+                    <p class="py-3">
+                        @foreach ($tags as $tag)
+                            <a class="mr-1 hover:opacity-70" href="#"> #{{ $tag->name }}</a>
+                        @endforeach
+                    </p>
                 </div>
             </article>
 
@@ -54,14 +61,14 @@
 
             <div class="flex flex-col md:flex-row shadow bg-gray-100 mt-6 mb-10 p-6">
                 <div class="flex basis-1/6 justify-center pb-4 mr-2">
-                    <img src="{{ asset($post->user->image->path) }}" class="rounded-full shadow h-32 max-w-none">
+                    <img src="{{ $post->user->image ? asset($post->user->image->path) : asset('/images/image-default.jpg') }}"
+                        class="rounded-full shadow h-32 max-w-none">
                 </div>
                 <div class="">
                     <p class="flex justify-center md:justify-start font-semibold text-2xl">{{ $post->user->name }}</p>
                     <p class="pt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel neque non
                         libero suscipit suscipit eu eu urna.</p>
-                    <div
-                        class="flex justify-center md:justify-start text-2xl no-underline text-rose-800 pt-4">
+                    <div class="flex justify-center md:justify-start text-2xl no-underline text-rose-800 pt-4">
                         <a class="" href="#">
                             <i class="fab fa-facebook"></i>
                         </a>
@@ -82,16 +89,6 @@
 
         <!-- Sidebar Section -->
         <aside class="w-full md:w-1/3 flex flex-col items-center px-3">
-
-            <div class="w-full bg-gray-100 shadow flex flex-col my-4 p-6">
-                <p class="text-xl font-semibold pb-5">About Us</p>
-                <p class="pb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis est eu odio
-                    sagittis tristique. Vestibulum ut finibus leo. In hac habitasse platea dictumst.</p>
-                <a href="#"
-                    class="w-full bg-rose-600 text-white font-bold text-sm uppercase rounded hover:bg-rose-500 flex items-center justify-center px-2 py-3 mt-4">
-                    Get to know us
-                </a>
-            </div>
 
             <div class="w-full bg-gray-100 shadow flex flex-col my-4 p-6">
                 <p class="text-xl font-semibold pb-5">Instagram</p>
